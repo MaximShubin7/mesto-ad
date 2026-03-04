@@ -9,6 +9,19 @@
 import { initialCards } from "./cards.js";
 import { createCardElement, deleteCard, likeCard } from "./components/card.js";
 import { openModalWindow, closeModalWindow, setCloseModalWindowEventListeners } from "./components/modal.js";
+import { enableValidation, clearValidation } from "./components/validation.js";
+
+// Создание объекта с настройками валидации
+const validationSettings = {
+  formSelector: ".popup__form",
+  inputSelector: ".popup__input",
+  submitButtonSelector: ".popup__button",
+  inactiveButtonClass: "popup__button_disabled",
+  inputErrorClass: "popup__input_type_error",
+  errorClass: "popup__error_visible",
+};
+
+enableValidation(validationSettings);
 
 // DOM узлы
 const placesWrap = document.querySelector(".places__list");
@@ -84,6 +97,7 @@ avatarForm.addEventListener("submit", handleAvatarFromSubmit);
 openProfileFormButton.addEventListener("click", () => {
   profileTitleInput.value = profileTitle.textContent;
   profileDescriptionInput.value = profileDescription.textContent;
+  clearValidation(profileForm, validationSettings);
   openModalWindow(profileFormModalWindow);
 });
 
